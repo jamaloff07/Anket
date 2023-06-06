@@ -49,10 +49,42 @@ namespace WinFormsApp2
 
                     break;
                 case "Load":
-`
-                    OpenFileDialog dialog = new OpenFileDialog();
-                    dialog.Title = $"{textBox1.Text}";
-                    dialog.Filter = "Json files (*.json)|*.json";
+
+                    OpenFileDialog openFileDialog = new OpenFileDialog();
+                    openFileDialog.Title = $"{textBox1.Text}";
+                    openFileDialog.Filter = "Json files (*.json)|*.json";
+
+                    if (openFileDialog.ShowDialog()==DialogResult.OK)
+                    {
+                        string filePath=openFileDialog.FileName;
+
+                        string json=File.ReadAllText(filePath);
+
+                        Anket loadedAnket=JsonSerializer.Deserialize<Anket>(json);
+
+                        textBox1.Text = loadedAnket.name;
+                        textBox2.Text = loadedAnket.surname;
+                        textBox3.Text = loadedAnket.fatherN;
+                        textBox4.Text = loadedAnket.country;
+                        textBox5.Text = loadedAnket.city;
+                        textBox6.Text = loadedAnket.phone;
+                        dateTimePicker1.Value = loadedAnket.Birthday;
+
+
+                        if (loadedAnket.Gender =="Male")
+                        {
+                            radioButton1.Checked=true;
+                            radioButton2.Checked=false;
+                        }
+
+                        else if (loadedAnket.Gender=="Famale")
+                        {
+                            radioButton2.Checked = true;
+                            radioButton1.Checked = false;
+
+                        }
+                    }
+
 
 
                     break;
